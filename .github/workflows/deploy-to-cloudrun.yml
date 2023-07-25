@@ -36,5 +36,5 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           image: gcr.io/tactile-alloy-392517/bigquery-example:latest
-          service: image-builder-service
+          service: bigquery-example
           region: us-east1
