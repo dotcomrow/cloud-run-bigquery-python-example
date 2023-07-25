@@ -1,0 +1,4 @@
+flask
+gunicorn
+pybase64
+google-cloud-storage
