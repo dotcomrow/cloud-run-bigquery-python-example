@@ -1,7 +1,8 @@
 from io import BytesIO
 import io
 from flask import Flask, request
-from google.cloud import bigquery, Table
+from google.cloud import bigquery
+from google.cloud.bigquery import Table
 
 app = Flask(__name__)
 
