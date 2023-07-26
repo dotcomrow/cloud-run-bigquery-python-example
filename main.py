@@ -1,14 +1,24 @@
 from io import BytesIO
 import io
 from flask import Flask, request
-from google.cloud import storage
+from google.cloud import bigquery, Table
 
 app = Flask(__name__)
 
 @app.post("/")
 def getImage():
+    client = bigquery.Client()
     
-    return "Hello World!"
+    table_id = Table.from_string("tactile-alloy-392517.mapData.location_data")
+    rows_to_insert = [
+        {"location": "LINESTRING(-118 33, -73 40)", "description":"a test line"}
+    ]
+    errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
+    
+    if errors == []:
+        return "New rows have been added."
+    else:
+        return "Success!"
 
 
 if __name__ == "__main__":
