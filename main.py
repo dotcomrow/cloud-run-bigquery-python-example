@@ -21,6 +21,13 @@ def getImage():
     else:
         return "Success!"
 
+@app.get
+def getItems():
+    client = bigquery.Client()
+    
+    return client.query("SELECT * FROM `tactile-alloy-392517.mapData.location_data`").to_dataframe()
+    
+
 
 if __name__ == "__main__":
     # Development only: run "python main.py" and open http://localhost:8080
