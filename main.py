@@ -21,7 +21,7 @@ def getImage():
     else:
         return "Success!"
 
-@app.get
+@app.get("/")
 def getItems():
     client = bigquery.Client()
     
