@@ -4,6 +4,7 @@ from flask import Flask, request
 from google.cloud import bigquery
 from google.cloud.bigquery import Table
 from pandas import DataFrame
+import db_dtypes
 
 app = Flask(__name__)
 
