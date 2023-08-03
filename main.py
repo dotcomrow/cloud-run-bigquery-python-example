@@ -27,7 +27,7 @@ def getImage():
 def getItems():
     client = bigquery.Client()
     
-    return client.query("SELECT * FROM `tactile-alloy-392517.mapData.location_data`").to_dataframe()
+    return client.query("SELECT * FROM `tactile-alloy-392517.mapData.location_data`").to_dataframe().to_json()
     
 
 
