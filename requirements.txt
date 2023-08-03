@@ -2,3 +2,4 @@ flask
 gunicorn
 pybase64
 google-cloud-BigQuery
+pandas
