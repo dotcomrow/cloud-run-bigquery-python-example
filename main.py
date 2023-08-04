@@ -25,12 +25,10 @@ oauth.register(
 def getImage():
     try:
         token = oauth.google.authorize_access_token()
-        if token is None:
-            redirect_uri = url_for('/', _external=True, method='POST')
-            return oauth.google.authorize_redirect(redirect_uri)
     except Exception as e: 
-        logging.error(e, exc_info=True)
-        return "Error"
+        redirect_uri = url_for('/', _external=True, method='POST')
+        return oauth.google.authorize_redirect(redirect_uri)
+    
     client = bigquery.Client()
     
     content_type = request.headers.get('Content-Type')
@@ -53,12 +51,9 @@ def getImage():
 def getItems():
     try:
         token = oauth.google.authorize_access_token()
-        if token is None:
-            redirect_uri = url_for('/', _external=True, method='POST')
-            return oauth.google.authorize_redirect(redirect_uri)
     except Exception as e: 
-        logging.error(e, exc_info=True)
-        return "Error"
+        redirect_uri = url_for('/', _external=True, method='POST')
+        return oauth.google.authorize_redirect(redirect_uri)
     
     client = bigquery.Client()
     
