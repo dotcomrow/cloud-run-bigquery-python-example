@@ -52,9 +52,11 @@ def getItems():
     try:
         token = oauth.google.authorize_access_token()
     except Exception as e: 
-        redirect_uri = url_for('/', _external=True, method='POST')
-        return oauth.google.authorize_redirect(redirect_uri)
-    
+        try:
+            redirect_uri = url_for('/', _external=True, method='POST')
+            return oauth.google.authorize_redirect(redirect_uri)
+        except Exception as e:
+            logging.error(e)
     client = bigquery.Client()
     
     return client.query("SELECT * FROM `tactile-alloy-392517.mapData.location_data`").to_dataframe().to_json()
