@@ -26,18 +26,20 @@ def login():
 
 @app.route('/auth')
 def auth():
-    token = oauth.google.authorize_access_token()
-    session['user'] = token['userinfo']
     return redirect('/')
 
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
     return redirect('/')
 
 @app.post("/")
 def getImage():
+    token = oauth.google.authorize_access_token()
+    if token is None:
+        redirect_uri = url_for('login', _external=True)
+        return oauth.google.authorize_redirect(redirect_uri)
+    
     client = bigquery.Client()
     
     content_type = request.headers.get('Content-Type')
@@ -58,6 +60,11 @@ def getImage():
 
 @app.get("/")
 def getItems():
+    token = oauth.google.authorize_access_token()
+    if token is None:
+        redirect_uri = url_for('login', _external=True)
+        return oauth.google.authorize_redirect(redirect_uri)
+    
     client = bigquery.Client()
     
     return client.query("SELECT * FROM `tactile-alloy-392517.mapData.location_data`").to_dataframe().to_json()
