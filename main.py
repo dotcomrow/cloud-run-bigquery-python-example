@@ -1,4 +1,4 @@
-from flask import Flask, Request, request
+from flask import Flask, request
 from google.cloud import bigquery
 from google.cloud.bigquery import Table
 from authlib.integrations.flask_client import OAuth
@@ -10,7 +10,7 @@ oauth = OAuth(app)
 def getImage():
     client = bigquery.Client()
     
-    content_type = Request.headers.get('Content-Type')
+    content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         json = request.json
         
