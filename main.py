@@ -18,20 +18,11 @@ oauth.register(
     }
 )
 
-@app.route('/auth')
-def auth():
-    return redirect('/')
-
-
-@app.route('/logout')
-def logout():
-    return redirect('/')
-
 @app.post("/")
 def getImage():
     token = oauth.google.authorize_access_token()
     if token is None:
-        redirect_uri = url_for('/', _external=True)
+        redirect_uri = url_for('/', _external=True, method='POST')
         return oauth.google.authorize_redirect(redirect_uri)
     
     client = bigquery.Client()
@@ -56,7 +47,7 @@ def getImage():
 def getItems():
     token = oauth.google.authorize_access_token()
     if token is None:
-        redirect_uri = url_for('/', _external=True)
+        redirect_uri = url_for('/', _external=True, method='GET')
         return oauth.google.authorize_redirect(redirect_uri)
     
     client = bigquery.Client()
