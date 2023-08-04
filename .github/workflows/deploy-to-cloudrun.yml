@@ -12,6 +12,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "<GOOGLE_OAUTH_CLIENT_ID>"
+          replace: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          regex: false
+
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "<GOOGLE_OAUTH_CLIENT_SECRET>"
+          replace: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+          regex: false
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
