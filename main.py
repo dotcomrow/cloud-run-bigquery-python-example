@@ -2,12 +2,15 @@ from flask import Flask, redirect, request, session, url_for
 from google.cloud import bigquery
 from google.cloud.bigquery import Table
 from authlib.integrations.flask_client import OAuth
+import google.cloud.logging
+import logging
 
 app = Flask(__name__)
-
+logClient = google.cloud.logging.Client()
 app.secret_key = '!secret'
 app.config.from_object('config')
 
+logClient.setup_logging()
 CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
 oauth = OAuth(app)
 oauth.register(
@@ -26,7 +29,7 @@ def getImage():
             redirect_uri = url_for('/', _external=True, method='POST')
             return oauth.google.authorize_redirect(redirect_uri)
     except Exception as e: 
-        print(e)
+        logging.error(e, exc_info=True)
         return "Error"
     client = bigquery.Client()
     
@@ -54,7 +57,7 @@ def getItems():
             redirect_uri = url_for('/', _external=True, method='POST')
             return oauth.google.authorize_redirect(redirect_uri)
     except Exception as e: 
-        print(e)
+        logging.error(e, exc_info=True)
         return "Error"
     
     client = bigquery.Client()
