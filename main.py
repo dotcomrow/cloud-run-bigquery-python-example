@@ -22,12 +22,12 @@ oauth.register(
 )
 
 @app.post("/data")
-def getImage():
+def addItems():
     try:
         token = oauth.google.authorize_access_token()
         logging.info(token)
     except Exception as e: 
-        redirect_uri = url_for('data', _external=True)
+        redirect_uri = url_for('addItems', _external=True)
         return oauth.google.authorize_redirect(redirect_uri)
     
     client = bigquery.Client()
@@ -54,7 +54,7 @@ def getItems():
         token = oauth.google.authorize_access_token()
         logging.info(token)
     except Exception as e: 
-        redirect_uri = url_for('data', _external=True)
+        redirect_uri = url_for('getItems', _external=True)
         return oauth.google.authorize_redirect(redirect_uri)
         
     client = bigquery.Client()
