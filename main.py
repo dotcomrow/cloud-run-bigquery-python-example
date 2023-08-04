@@ -1,12 +1,10 @@
-from io import BytesIO
-import io
-from flask import Flask, request
+from flask import Flask
 from google.cloud import bigquery
 from google.cloud.bigquery import Table
-from pandas import DataFrame
-import db_dtypes
+from authlib.integrations.flask_client import OAuth
 
 app = Flask(__name__)
+oauth = OAuth(app)
 
 @app.post("/")
 def getImage():

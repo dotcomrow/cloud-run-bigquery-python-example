@@ -4,3 +4,4 @@ pybase64
 google-cloud-BigQuery
 pandas
 db_dtypes
+Authlib
