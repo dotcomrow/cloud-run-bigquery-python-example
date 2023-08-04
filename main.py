@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 from google.cloud import bigquery
 from google.cloud.bigquery import Table
 from authlib.integrations.flask_client import OAuth
+import requests
 
 app = Flask(__name__)
 oauth = OAuth(app)
@@ -10,16 +11,21 @@ oauth = OAuth(app)
 def getImage():
     client = bigquery.Client()
     
-    table_id = Table.from_string("tactile-alloy-392517.mapData.location_data")
-    rows_to_insert = [
-        {"location": "LINESTRING(-118 33, -73 40)", "description":"a test line"}
-    ]
-    errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
-    
-    if errors == []:
-        return "New rows have been added."
+    content_type = requests.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        json = request.json
+        
+        table_id = Table.from_string("tactile-alloy-392517.mapData.location_data")
+        rows_to_insert = [json]
+        errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
+        
+        if errors == []:
+            return "New rows have been added."
+        else:
+            return "Error"
     else:
-        return "Success!"
+        return 'Content-Type not supported!'
+    
 
 @app.get("/")
 def getItems():
